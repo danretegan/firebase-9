@@ -3,7 +3,14 @@
 // acum:
 import { initializeApp } from "firebase/app";
 
-import { getFirestore, collection, getDocs } from "firebase/firestore";
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  addDoc,
+  deleteDoc,
+  doc,
+} from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: process.env.API_KEY,
@@ -42,3 +49,31 @@ getDocs(colRef)
   .catch((err) => {
     console.log(err.message);
   });
+
+//* adding documents:
+const addBookForm = document.querySelector(".add");
+addBookForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  addDoc(colRef, {
+    title: addBookForm.title.value,
+    author: addBookForm.author.value,
+  }).then(() => {
+    addBookForm.reset();
+  });
+});
+
+//* deleting documents:
+const deleteBookForm = document.querySelector(".delete");
+deleteBookForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  const docRef = doc(db, "books", deleteBookForm.id.value);
+
+  deleteDoc(docRef).then(() => {
+    console.log(
+      `The book with id: ${deleteBookForm.id.value} was successfully deleted!`
+    );
+    deleteBookForm.reset();
+  });
+});
