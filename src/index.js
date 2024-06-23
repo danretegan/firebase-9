@@ -3,6 +3,8 @@
 // acum:
 import { initializeApp } from "firebase/app";
 
+import { getFirestore, collection, getDocs } from "firebase/firestore";
+
 const firebaseConfig = {
   apiKey: process.env.API_KEY,
   authDomain: process.env.AUTH_DOMAIN,
@@ -17,3 +19,26 @@ const firebaseConfig = {
 // firebase.initializeApp(firebaseConfig);
 // acum:
 initializeApp(firebaseConfig);
+
+//* Initialize Firestore:
+const db = getFirestore();
+// inainte:
+// const db = firebase.firestore();
+// db.collection("books");
+
+//* Collection reference:
+const colRef = collection(db, "books");
+
+//* Get collection data:
+getDocs(colRef)
+  .then((snapshot) => {
+    // console.log(snapshot.docs);
+    let books = [];
+    snapshot.docs.forEach((elem) => {
+      books.push({ ...elem.data(), id: elem.id });
+    });
+    console.log(books);
+  })
+  .catch((err) => {
+    console.log(err.message);
+  });
