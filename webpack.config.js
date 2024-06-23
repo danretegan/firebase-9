@@ -9,6 +9,6 @@ module.exports = {
     filename: "bundle.js",
   },
   watch: true,
-  devtool: "cheap-module-source-map",
+  devtool: "eval-source-map",
   plugins: [new Dotenv()],
 };
