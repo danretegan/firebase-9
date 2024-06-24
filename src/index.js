@@ -47,8 +47,8 @@ const colRef = collection(db, "books");
 // const q = query(colRef, orderBy("author", "asc"));
 const q = query(colRef, orderBy("created_at"));
 
-//! Real time get collection data:
-onSnapshot(q, (snapshot) => {
+//* Real time get collection data:
+const unsubCol = onSnapshot(q, (snapshot) => {
   let books = [];
   snapshot.docs.forEach((elem) => {
     books.push({ ...elem.data(), id: elem.id });
@@ -94,7 +94,7 @@ const docReference = doc(db, "books", "2kmaSKSfaXoObx1B2nfD");
 // 'arg' este obiectul DocumentSnapshot returnat de promisiune, conține toate informațiile despre documentul specificat, inclusiv datele sale și ID-ul.
 
 // acum documentul va fi listat in consola ori de cate ori va exista o modificare asupra lui
-onSnapshot(docReference, (arg) => {
+const unsubDoc = onSnapshot(docReference, (arg) => {
   // console.log(arg);
   console.log(arg.data(), arg.id);
 });
@@ -162,6 +162,15 @@ loginForm.addEventListener("submit", (e) => {
 });
 
 //* Subscribing to auth changes:
-onAuthStateChanged(auth, (user) => {
+const unsubAuth = onAuthStateChanged(auth, (user) => {
   console.log("user status changed:", user);
+});
+
+//* unsubscribing from changes (auth & db):
+const unsubButton = document.querySelector(".unsub");
+unsubButton.addEventListener("click", () => {
+  unsubCol();
+  unsubDoc();
+  unsubAuth();
+  console.log("Unsubscribing!");
 });
