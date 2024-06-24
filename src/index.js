@@ -1,6 +1,3 @@
-// inainte:
-// import firebase from "firebase/app";
-// acum:
 import { initializeApp } from "firebase/app";
 
 import {
@@ -18,6 +15,8 @@ import {
   updateDoc,
 } from "firebase/firestore";
 
+import { getAuth } from "firebase/auth";
+
 const firebaseConfig = {
   apiKey: process.env.API_KEY,
   authDomain: process.env.AUTH_DOMAIN,
@@ -28,16 +27,11 @@ const firebaseConfig = {
 };
 
 //* Initialize Firebase:
-// inainte:
-// firebase.initializeApp(firebaseConfig);
-// acum:
 initializeApp(firebaseConfig);
 
-//* Initialize Firestore:
+//! Initialize Firestore:
 const db = getFirestore();
-// inainte:
-// const db = firebase.firestore();
-// db.collection("books");
+const auth = getAuth();
 
 //* Collection reference:
 const colRef = collection(db, "books");
