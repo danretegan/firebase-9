@@ -14,6 +14,7 @@ import {
   where,
   orderBy,
   serverTimestamp,
+  getDoc,
 } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -81,4 +82,18 @@ deleteBookForm.addEventListener("submit", (e) => {
     );
     deleteBookForm.reset();
   });
+});
+
+//* Get a single document:
+// Obține o referință la documentul specificat prin ID-ul său în colecția "books"
+const docReference = doc(db, "books", "2kmaSKSfaXoObx1B2nfD");
+
+// Folosește funcția getDoc pentru a obține documentul
+// TODO getDoc(docReference).then((arg) => console.log(arg.data(), arg.id));
+// 'arg' este obiectul DocumentSnapshot returnat de promisiune, conține toate informațiile despre documentul specificat, inclusiv datele sale și ID-ul.
+
+// acum documentul va fi listat in consola ori de cate ori va exista o modificare asupra lui
+onSnapshot(docReference, (arg) => {
+  console.log(arg);
+  console.log(arg.data(), arg.id);
 });
