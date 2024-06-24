@@ -20,6 +20,7 @@ import {
   createUserWithEmailAndPassword,
   signOut,
   signInWithEmailAndPassword,
+  onAuthStateChanged,
 } from "firebase/auth";
 
 const firebaseConfig = {
@@ -94,7 +95,7 @@ const docReference = doc(db, "books", "2kmaSKSfaXoObx1B2nfD");
 
 // acum documentul va fi listat in consola ori de cate ori va exista o modificare asupra lui
 onSnapshot(docReference, (arg) => {
-  console.log(arg);
+  // console.log(arg);
   console.log(arg.data(), arg.id);
 });
 
@@ -123,7 +124,7 @@ signupForm.addEventListener("submit", (e) => {
 
   createUserWithEmailAndPassword(auth, email, password)
     .then((cred) => {
-      console.log("user created:", cred.user);
+      // console.log("user created:", cred.user);
       signupForm.reset();
     })
     .catch((err) => {
@@ -136,7 +137,7 @@ const logoutButton = document.querySelector(".logout");
 logoutButton.addEventListener("click", () => {
   signOut(auth)
     .then(() => {
-      console.log("You are logged out!");
+      // console.log("You are logged out!");
     })
     .catch((err) => {
       console.log(err.message);
@@ -152,10 +153,15 @@ loginForm.addEventListener("submit", (e) => {
 
   signInWithEmailAndPassword(auth, email, password)
     .then((cred) => {
-      console.log("user logged in:", cred.user);
+      // console.log("user logged in:", cred.user);
       loginForm.reset();
     })
     .catch((err) => {
       console.log(err.message);
     });
+});
+
+//* Subscribing to auth changes:
+onAuthStateChanged(auth, (user) => {
+  console.log("user status changed:", user);
 });
