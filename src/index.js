@@ -15,6 +15,7 @@ import {
   orderBy,
   serverTimestamp,
   getDoc,
+  updateDoc,
 } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -96,4 +97,19 @@ const docReference = doc(db, "books", "2kmaSKSfaXoObx1B2nfD");
 onSnapshot(docReference, (arg) => {
   console.log(arg);
   console.log(arg.data(), arg.id);
+});
+
+//* Updating a document:
+const updateForm = document.querySelector(".update");
+updateForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  // Obține o referință la documentul specificat prin ID-ul său în colecția "books"
+  const docRef = doc(db, "books", updateForm.id.value);
+  // updatare simpla a titlului (putem face un formular de updatare mai complex):
+  updateDoc(docRef, {
+    title: "UPDATED TITLE",
+  }).then(() => {
+    updateForm.reset();
+  });
 });
