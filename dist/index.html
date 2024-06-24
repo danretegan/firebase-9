@@ -24,16 +24,25 @@
     </form>
 
     <form class="delete">
-      <label for="id">Document id:</label>
-      <input type="text" id="id" name="id" required />
+      <label for="delete-id">Document id:</label>
+      <input type="text" name="id" id="delete-id" required />
       <button>delete a book</button>
     </form>
 
     <form class="update">
-      <label for="id">Document id:</label>
-      <input type="text" id="id" name="id" required />
-
+      <label for="update-id">Document id:</label>
+      <input type="text" name="id" id="update-id" required />
       <button>update a book</button>
+    </form>
+
+    <h2>Firebase Auth</h2>
+
+    <form class="signup">
+      <label for="email">email:</label>
+      <input type="email" id="email" name="email" />
+      <label for="password">password:</label>
+      <input type="password" id="password" name="password" />
+      <button>signup</button>
     </form>
 
     <script src="bundle.js"></script>
